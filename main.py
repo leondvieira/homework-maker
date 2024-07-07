@@ -109,11 +109,11 @@ def main():
             "Enter your question:",
         )
         submitted_options = st.form_submit_button(
-            "Confirmar",
+            "Confirm",
             disabled=not st.session_state.document
         )
         if submitted_options:
-            with st.spinner("Carregando..."):
+            with st.spinner("Loading..."):
                 st.session_state.relevant_documents = get_relevant_documents(
                     document=st.session_state.document,
                     question=st.session_state.question,
@@ -122,7 +122,7 @@ def main():
                 )
 
     if st.session_state.relevant_documents:
-        st.markdown("## Trechos relevantes encontrados:")
+        st.markdown("## Chunks found:")
         for i, doc in enumerate(st.session_state.relevant_documents):
             st.markdown(f"#{i + 1}")
             st.markdown(doc.page_content)
@@ -130,24 +130,24 @@ def main():
 
         with st.form("selectDocumentForm"):            
             st.radio(
-                "Selecione qual trecho deseja enviar.",
+                "Choose the chunk you'd like.",
                 key="selected_document",
                 options=[int(i) for i in range(1, len(st.session_state.relevant_documents) + 1)],
             )
 
             submitted_request_response = st.form_submit_button(
-                "Obter Resposta da IA :robot_face:",
+                "Get AI Response :robot_face:",
             )
 
             if submitted_request_response:
-                with st.spinner("Carregando..."):
+                with st.spinner("Loading..."):
                     st.session_state.result = get_response(
                         context_content=st.session_state.relevant_documents[st.session_state.selected_document - 1].page_content,
                         question=st.session_state.question
                     )
         
     if st.session_state.result:
-        st.markdown("# Resultado:")
+        st.markdown("# Result:")
         st.markdown(st.session_state.result)
 
 if __name__ == "__main__":
