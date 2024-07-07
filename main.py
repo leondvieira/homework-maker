@@ -76,13 +76,13 @@ def get_response(context_content, question):
 def main():
     
     init_session_state()
-    st.set_page_config(page_title="Homework Maker", page_icon=":robot_face:")
-    st.title(":robot_face: - Homework Maker")
+    st.set_page_config(page_title="Homework Solver", page_icon=":robot_face:")
+    st.title(":robot_face: - Homework Solver")
 
     st.session_state.document = st.file_uploader(
         on_change=restart_vectorstore(),
         type="pdf",
-        label="Upload your document here. Note: it doesn't work with digitized documents.",
+        label="Upload your document here. Note: it doesn't work with scanned documents.",
     )
     
     with st.form("optionsForm"):
